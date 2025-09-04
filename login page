@@ -1,29 +1,49 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
+  <meta charset="utf-8" />
   <title>Simple Login Demo</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 40px; }
+    .box { width: 320px; margin: 0 auto; border: 1px solid #ddd; padding: 20px; border-radius: 8px; background:#fff; }
+    input { width:100%; padding:8px; margin:8px 0; box-sizing:border-box; }
+    button { width:100%; padding:10px; }
+    #result { margin-top:12px; color:#111; background:#f7f7f7; padding:8px; border-radius:6px; word-wrap:break-word; }
+  </style>
 </head>
 <body>
-  <h2>Login Page</h2>
+  <div class="box">
+    <h3>Login</h3>
+    <form id="loginForm" autocomplete="off">
+      <input id="username" name="username" type="text" placeholder="Username" required />
+      <input id="password" name="password" type="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
 
-  <form id="loginForm">
-    <label>Username:</label><br>
-    <input type="text" id="username" required><br><br>
-
-    <label>Password:</label><br>
-    <input type="password" id="password" required><br><br>
-
-    <button type="submit">Login</button>
-  </form>
+    <!-- where we show the captured values -->
+    <div id="result" aria-live="polite"></div>
+  </div>
 
   <script>
-    document.getElementById("loginForm").addEventListener("submit", function(event) {
-      event.preventDefault(); // stop page reload
+    // ensure DOM is ready
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('loginForm');
+      const out = document.getElementById('result');
 
-      let user = document.getElementById("username").value;
-      let pass = document.getElementById("password").value;
+      form.addEventListener('submit', function (ev) {
+        ev.preventDefault(); // IMPORTANT: stop the form from reloading the page
 
-      alert("Username: " + user + "\nPassword: " + pass);
+        // grab values
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        // show in result area (demo only) and log to console
+        out.textContent = 'Captured (demo only) — Username: ' + username + '  |  Password: ' + password;
+        console.log('Captured username:', username);
+        console.log('Captured password:', password);
+
+        // In real apps: send securely to a backend, do not store plain passwords
+      });
     });
   </script>
 </body>
